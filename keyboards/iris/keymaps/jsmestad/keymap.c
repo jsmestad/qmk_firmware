@@ -7,17 +7,22 @@ extern keymap_config_t keymap_config;
 #define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
+#define _GAME 3
 #define _ADJUST 16
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
+  GAME,
   ADJUST,
 };
 
 #define KC_ KC_TRNS
 #define _______ KC_TRNS
+
+#define KC_PC TO(0)
+#define KC_GM TO(3)
 
 #define KC_CAPW LGUI(LSFT(KC_3))        // Capture whole screen
 #define KC_CPYW LGUI(LSFT(LCTL(KC_3)))  // Copy whole screen
@@ -50,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_LOWER] = LAYOUT_kc(
   //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
-     TILD,    ,    ,    ,    ,    ,                   ,    ,    ,    ,    ,    ,
+     GRV ,    ,    ,    ,    ,    ,               MPRV,MPLY,MNXT,VOLD,VOLU,DEL ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
          ,    ,    ,    ,    ,    ,                   ,    ,    ,    ,    ,    ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
@@ -68,11 +73,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
          ,EXLM, AT ,HASH,DLR ,PERC,               CIRC,AMPR,ASTR,LPRN,RPRN,    ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     DEL ,MPRV,BACK,FORW,PGUP,UNDS,               EQL ,HOME,    ,    ,    ,BSLS,
+         ,    ,    ,    ,    ,    ,                   ,    ,    ,    ,    ,    ,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-     MUTE,MSTP,MPLY,VOLD,PGDN,MINS,    ,         ,PLUS,END ,    ,    ,    ,    ,
+         ,    ,    ,    ,    ,    , GM ,         ,    ,    ,    ,    ,    ,    ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
                            ,    ,    ,             ,    ,
+  //                  `----+----+----'        `----+----+----'
+  ),
+
+  [_GAME] = LAYOUT_kc(
+  //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
+     PC  ,GRV , 1  , 2  , 3  , 4  ,                   ,    ,    ,    ,    ,    ,
+  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
+         ,TAB , Q  , W  , E  , R  ,                   ,    ,    ,    ,    ,    ,
+  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
+         ,LCTL, A  , S  , D  , F  ,                   ,    ,    ,    ,    ,    ,
+  //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
+      B  ,LSFT, Z  , X  , C  , V  ,LALT,         ,    ,    ,    ,    ,    ,    ,
+  //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
+                       PC  ,SPC , SPC,         PC ,   ,    
   //                  `----+----+----'        `----+----+----'
   ),
 
