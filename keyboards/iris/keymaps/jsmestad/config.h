@@ -39,5 +39,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_HUE_STEP 8
 #define RGBLIGHT_SAT_STEP 8
 #define RGBLIGHT_VAL_STEP 8
+#define RGBLIGHT_SLEEP // Sleep RGB when computer sleeps
 
 #endif
