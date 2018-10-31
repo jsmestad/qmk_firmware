@@ -7,7 +7,8 @@ extern keymap_config_t keymap_config;
 #define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
-#define _GAME 3
+#define _OVERWATCH 3
+#define _GAME 4
 #define _ADJUST 16
 
 enum custom_keycodes {
@@ -15,6 +16,7 @@ enum custom_keycodes {
   LOWER,
   RAISE,
   GAME,
+  OVERWATCH,
   ADJUST,
 };
 
@@ -22,7 +24,8 @@ enum custom_keycodes {
 #define _______ KC_TRNS
 
 #define KC_PC TO(0)
-#define KC_GM TO(3)
+#define KC_GM TO(4)
+#define KC_OW TO(3)
 
 #define KC_CAPW LGUI(LSFT(KC_3))        // Capture whole screen
 #define KC_CPYW LGUI(LSFT(LCTL(KC_3)))  // Copy whole screen
@@ -64,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
          ,    ,    ,    ,    ,    ,    ,         ,    ,    ,    ,    ,    ,    ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                           ,    ,    ,             ,    ,    
+                           ,    ,    ,             ,    ,
   //                  `----+----+----'        `----+----+----'
   ),
 
@@ -90,9 +93,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
          ,LCTL, A  , S  , D  , F  ,                   ,    ,    ,    ,    ,    ,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-      B  ,LSFT, Z  , X  , C  , V  ,LALT,         ,    ,    ,    ,    ,    ,    ,
+      B  ,LSFT, Z  , X  , C  , V  ,LALT,      OW ,    ,    ,    ,    ,    ,    ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                       PC  ,SPC , SPC,         PC ,   ,    
+                       PC  ,    , SPC,            ,   ,
+  //                  `----+----+----'        `----+----+----'
+  ),
+
+  [_OVERWATCH] = LAYOUT_kc(
+  //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
+         ,    ,    ,    ,    ,    ,                   ,    ,    ,    ,    ,    ,
+  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
+         ,    ,    ,    ,    ,    ,                   ,    ,    ,    ,    ,    ,
+  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
+         ,    ,    ,    ,    ,    ,                   ,    ,    ,    ,    ,    ,
+  //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
+         ,    ,    ,    ,    ,    ,    ,      GM ,    ,    ,    ,    ,    ,    ,
+  //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
+                           ,SPC , SPC,         PC ,   ,
   //                  `----+----+----'        `----+----+----'
   ),
 
