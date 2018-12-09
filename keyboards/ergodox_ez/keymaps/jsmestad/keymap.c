@@ -14,12 +14,16 @@ enum custom_keycodes {
   RGB_SLD
 };
 
+#define KC_____ KC_TRNS
 #define ____ KC_TRNS
+#define _______ KC_TRNS
+
+#define KC_ESCC MT(MOD_LCTL, KC_ESC)    // Control (hold), Escape (tap)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT_ergodox_pretty_kc(
   //,-----+----+----+----+----+----+----.                 ,----+----+----+----+----+----+-----.
-     EQL  , 1  , 2  , 3  , 4  , 5  ,____,                  ____, 6  , 7  , 8  , 9  , 10 , MINS,
+     EQL  , 1  , 2  , 3  , 4  , 5  ,____,                  ____, 6  , 7  , 8  , 9  , 0  , MINS,
   //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
      TAB  , Q  , W  , E  , R  , T  ,____,                  ____, Y  , U  , I  , O  , P  , BSLS,
   //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
