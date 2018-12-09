@@ -1,91 +1,42 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
 
-#define BASE 0 // default layer
+#define _QWERTY 0
 #define SYMB 1 // symbols
 #define MDIA 2 // media keys
 
 #define KC_SYM TG(SYMB)
 
 enum custom_keycodes {
+  QWERTY = SAFE_RANGE,
   EPRM = SAFE_RANGE,
   VRSN,
   RGB_SLD
 };
 
+#define ____ KC_TRNS
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Keymap 0: Basic layer
- *
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |   =    |   1  |   2  |   3  |   4  |   5  | LEFT |           | RIGHT|   6  |   7  |   8  |   9  |   0  |   -    |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Del    |   Q  |   W  |   E  |   R  |   T  |  L1  |           |  L1  |   Y  |   U  |   I  |   O  |   P  |   \    |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | BkSp   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |; / L2|' / Cmd |
- * |--------+------+------+------+------+------| Hyper|           | Meh  |------+------+------+------+------+--------|
- * | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |//Ctrl| RShift |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |Grv/L1|  '"  |AltShf| Left | Right|                                       |  Up  | Down |   [  |   ]  | ~L1  |
- *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        | App  | LGui |       | Alt  |Ctrl/Esc|
- *                                 ,------|------|------|       |------+--------+------.
- *                                 |      |      | Home |       | PgUp |        |      |
- *                                 | Space|Backsp|------|       |------|  Tab   |Enter |
- *                                 |      |ace   | End  |       | PgDn |        |      |
- *                                 `--------------------'       `----------------------'
- */
-[BASE] = LAYOUT_ergodox(
-  [_QWERTY] = LAYOUT_kc(
+[_QWERTY] = LAYOUT_ergodox_pretty_kc(
   //,-----+----+----+----+----+----+----.                 ,----+----+----+----+----+----+-----.
-     EQL  , L01, L02, L03, L04, L05, L06,                  R00 , R01, R02, R03, R04, R05, R06,
+     EQL  , 1  , 2  , 3  , 4  , 5  ,____,                  ____, 6  , 7  , 8  , 9  , 10 , MINS,
   //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
-     L10  , L11, L12, L13, L14, L15, L16,                  R10 , R11, R12, R13, R14, R15, R16,
+     TAB  , Q  , W  , E  , R  , T  ,____,                  ____, Y  , U  , I  , O  , P  , BSLS,
   //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
-     L20  , L21, L22, L23, L24, L25,                             R21, R22, R23, R24, R25, R26,
+     ESCC , A  , S  , D  , F  , G  ,                             H  , J  , K  , L  ,SCLN, QUOT,
   //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
-     L30  , L31, L32, L33, L34, L35, L36,                  R30 , R31, R32, R33, R34, R35, R36,
+     LSFT , Z  , X  , C  , V  , B  ,____,                  ____, N  , M  ,COMM, DOT,SLSH, RSFT,
   //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
-      L40 , L41, L42, L43, L44,                                      R42 , R43, R44, R45, R46,
+      ____, GRV,____,____,____,                                      ____,____,LBRC,RBRC,____,
   // |----+----+----+----+----+    +----|                 |----+    +----+----+----+----+----|
 
   //                            ,----+----,             ,----+----,
-                                 L55 , L56,              R50, R51 ,
+                                 APP ,LALT,              LALT,RCTL,
   //                            |----+----+----|   |----+----+----|
-                                           L54 ,    R52,
+                                           HOME,    PGUP,
   //                            |    .    .----|   |----.    .    |
-                                 L53 , L52, L51,    R55, R54 , R53
+                                 BSPC,DEL ,END ,    PGDN, ENT, SPC 
   //                            ,----+----+----,   ,----+----+----,
-  //,----+----+----+----+----+----+----.              ,----+----+----+----+----+----.
-     EQL , 1  , 2  , 3  , 4  , 5  ,LEFT,                6  , 7  , 8  , 9  , 0  ,BSPC,
-  //|----+----+----+----+----+----+----|              |----+----+----+----+----+----|
-     TAB , Q  , W  , E  , R  , T  ,SYM ,               Y  , U  , I  , O  , P  ,BSLS,
-  //|----+----+----+----+----+----+----|              |----+----+----+----+----+----|
-     ESCC, A  , S  , D  , F  , G  ,                    H  , J  , K  , L  ,SCLN,QUOT,
-  //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-     LSFT, Z  , X  , C  , V  , B  ,LALT,     MINS, N  , M  ,COMM,DOT ,SLSH,RASE,
-  //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                       LOWR,SPCC,ENTA,         SPC ,LBRC,RBRC
-  //                  `----+----+----'        `----+----+----'
-  ),
-  // left hand
-  KC_EQL,          KC_1,        KC_2,          KC_3,    KC_4,    KC_5,    KC_LEFT,
-  KC_DELT,         KC_Q,        KC_W,          KC_E,    KC_R,    KC_T,    TG(SYMB),
-  KC_BSPC,         KC_A,        KC_S,          KC_D,    KC_F,    KC_G,
-  KC_LSFT,         CTL_T(KC_Z), KC_X,          KC_C,    KC_V,    KC_B,    ALL_T(KC_NO),
-  LT(SYMB,KC_GRV), KC_QUOT,     LALT(KC_LSFT), KC_LEFT, KC_RGHT,
-                                                           ALT_T(KC_APP), KC_LGUI,
-                                                                          KC_HOME,
-                                                         KC_SPC, KC_BSPC, KC_END,
-  // right hand
-  KC_RGHT,      KC_6,    KC_7,    KC_8,    KC_9,              KC_0,           KC_MINS,
-  TG(SYMB),     KC_Y,    KC_U,    KC_I,    KC_O,              KC_P,           KC_BSLS,
-  KC_H,         KC_J,    KC_K,    KC_L,    LT(MDIA, KC_SCLN), GUI_T(KC_QUOT),
-  MEH_T(KC_NO), KC_N,    KC_M,    KC_COMM, KC_DOT,            CTL_T(KC_SLSH), KC_RSFT,
-  KC_UP,        KC_DOWN, KC_LBRC, KC_RBRC, KC_FN1,
-  KC_LALT, CTL_T(KC_ESC),
-  KC_PGUP,
-  KC_PGDN, KC_TAB, KC_ENT
 ),
 /* Keymap 1: Symbol Layer
  *
