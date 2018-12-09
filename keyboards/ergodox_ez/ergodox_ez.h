@@ -223,7 +223,7 @@ inline void ergodox_led_all_set(uint8_t n)
     { R06, R16, R26, R36, R46, KC_NO }    \
     }
 /*  ---------- LEFT HAND -----------   ---------- RIGHT HAND ---------- */
-#define LAYOUT_ergodox_pretty_kc(                                        \
+#define LAYOUT_ergodox_pretty_kc( \
     L00,L01,L02,L03,L04,L05,L06,           R00,R01,R02,R03,R04,R05,R06,  \
     L10,L11,L12,L13,L14,L15,L16,           R10,R11,R12,R13,R14,R15,R16,  \
     L20,L21,L22,L23,L24,L25,                   R21,R22,R23,R24,R25,R26,  \
@@ -231,8 +231,8 @@ inline void ergodox_led_all_set(uint8_t n)
     L40,L41,L42,L43,L44,                           R42,R43,R44,R45,R46,  \
                             L55,L56,   R50,R51,                          \
                                 L54,   R52,                              \
-                        L53,L52,L51,   R55,R54,R53 )                     \
-                                          \
+                        L53,L52,L51,   R55,R54,R53 \
+    ) \
     LAYOUT_ergodox_pretty( \
         KC_##L00,KC_##L01,KC_##L02,KC_##L03,KC_##L04,KC_##L05,KC_##L06,                   KC_##R00,KC_##R01,KC_##R02,KC_##R03,KC_##R04,KC_##R05,KC_##R06,  \
         KC_##L10,KC_##L11,KC_##L12,KC_##L13,KC_##L14,KC_##L15,KC_##L16,                   KC_##R10,KC_##R11,KC_##R12,KC_##R13,KC_##R14,KC_##R15,KC_##R16,  \
