@@ -46,11 +46,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             , GRV,    ,    ,LOWR,                                      RASE,    ,LBRC,RBRC,    , // R46 (last field, is not working?)
     // |----+----+----+----+----+    +----|                 |----+    +----+----+----+----+----|
     //                            ,----+----,             ,----+----,
-                                   APP ,LALT,              LALT,RCTL,
+                                   LGUI,LALT,              LALT,RCTL,
     //                            |----+----+----|   |----+----+----|
-                                             HOME,    PGUP,
+                                                 ,    PGUP,
     //                            |    .    .----|   |----.    .    |
-                                   BSPC,DEL ,END ,    PGDN, ENT, SPC 
+                                   BSPC,DEL ,LGUI,    PGDN, ENT, SPC 
     //                            ,----+----+----,   ,----+----+----,
   ),
 
@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //                            |----+----+----|   |----+----+----|
                                                  ,        ,
     //                            |    .    .----|   |----.    .    |
-                                   SPC ,    ,    ,        ,    ,BSPC
+                                   SPC , SPC,    ,        ,    ,BSPC
     //                            ,----+----+----,   ,----+----+----,
   ),
 
