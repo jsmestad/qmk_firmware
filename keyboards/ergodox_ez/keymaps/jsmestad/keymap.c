@@ -1,18 +1,22 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
+#include "action_layer.h"
+#include "eeconfig.h"
 
 #define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
+#define _GAMING 3
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
-  EPRM = SAFE_RANGE,
   LOWER,
   RAISE,
-  VRSN,
-  RGB_SLD
+  GAMING,
 };
+
+#define KC_PC TO(0)
+#define KC_GM TO(3)
 
 #define KC_ KC_TRNS
 #define KC_____ KC_TRNS
@@ -31,23 +35,64 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_ergodox_pretty_kc(
     //,-----+----+----+----+----+----+----.                 ,----+----+----+----+----+----+-----.
-       EQL  , 1  , 2  , 3  , 4  , 5  ,____,                  ____, 6  , 7  , 8  , 9  , 0  , MINS,
+       EQL  , 1  , 2  , 3  , 4  , 5  ,    ,                      , 6  , 7  , 8  , 9  , 0  , MINS,
     //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
-       TAB  , Q  , W  , E  , R  , T  ,____,                  ____, Y  , U  , I  , O  , P  , BSLS,
+       TAB  , Q  , W  , E  , R  , T  ,    ,                      , Y  , U  , I  , O  , P  , BSLS,
     //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
        ESCC , A  , S  , D  , F  , G  ,                             H  , J  , K  , L  ,SCLN, QUOT,
     //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
-       LSFT , Z  , X  , C  , V  , B  ,____,                  ____, N  , M  ,COMM, DOT,SLSH, RSFT,
+       LSFT , Z  , X  , C  , V  , B  ,    ,                      , N  , M  ,COMM, DOT,SLSH, RSFT,
     //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
-        ____, GRV,____,____,LOWR,                                      ____,____,LBRC,RBRC,RASE,
+            , GRV,    ,    ,LOWR,                                      RASE,    ,LBRC,RBRC,    , // R46 (last field, is not working?)
     // |----+----+----+----+----+    +----|                 |----+    +----+----+----+----+----|
-  
     //                            ,----+----,             ,----+----,
                                    APP ,LALT,              LALT,RCTL,
     //                            |----+----+----|   |----+----+----|
                                              HOME,    PGUP,
     //                            |    .    .----|   |----.    .    |
                                    BSPC,DEL ,END ,    PGDN, ENT, SPC 
+    //                            ,----+----+----,   ,----+----+----,
+  ),
+
+  [_GAMING] = LAYOUT_ergodox_pretty_kc(
+    //,-----+----+----+----+----+----+----.                 ,----+----+----+----+----+----+-----.
+       GRV  , 1  , 2  , 3  , 4  , 5  ,    ,                      , 6  , 7  , 8  , 9  , 0  , MINS,
+    //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
+       TAB  , Q  , W  , E  , R  , T  ,ESC ,                      , Y  , U  , I  , O  , P  , BSLS,
+    //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
+       LCTL , A  , S  , D  , F  , G  ,                             H  , J  , K  , L  ,SCLN, QUOT,
+    //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
+       LSFT , Z  , X  , C  , V  , B  , PC ,                      , N  , M  ,COMM, DOT,SLSH, RSFT,
+    //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
+        LALT,    ,    ,    ,LOWR,                                      RASE,    ,LBRC,RBRC,    , // R46 (last field, is not working?)
+    // |----+----+----+----+----+    +----|                 |----+    +----+----+----+----+----|
+    //                            ,----+----,             ,----+----,
+                                       ,    ,                  ,    ,
+    //                            |----+----+----|   |----+----+----|
+                                                 ,        ,
+    //                            |    .    .----|   |----.    .    |
+                                   SPC ,    ,    ,        ,    ,BSPC
+    //                            ,----+----+----,   ,----+----+----,
+  ),
+
+  [_LOWER] = LAYOUT_ergodox_pretty_kc(
+    //,-----+----+----+----+----+----+----.                 ,----+----+----+----+----+----+-----.
+            ,    ,    ,    ,    ,    ,    ,                      ,MPRV,MPLY,MNXT,VOLD,VOLU,     ,
+    //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
+            ,    , UP ,    ,    ,    ,    ,                      ,    ,    ,    ,    ,    ,     ,
+    //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
+            ,LEFT,DOWN,RGHT,    ,    ,                            LEFT,DOWN, UP ,RGHT,    ,     ,
+    //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
+            ,    ,    ,    ,    ,    , GM ,                      ,    ,    ,    ,    ,    ,     ,
+    //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
+            ,    ,    ,    ,    ,                                          ,    ,    ,    ,    ,
+    // |----+----+----+----+----+    +----|                 |----+    +----+----+----+----+----|
+    //                            ,----+----,             ,----+----,
+                                       ,    ,                  ,    ,
+    //                            |----+----+----|   |----+----+----|
+                                                 ,        ,
+    //                            |    .    .----|   |----.    .    |
+                                       ,    ,    ,        ,    ,
     //                            ,----+----+----,   ,----+----+----,
   ),
 
@@ -63,7 +108,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
             ,    ,    ,    ,    ,                                          ,    ,    ,    ,    ,
     // |----+----+----+----+----+    +----|                 |----+    +----+----+----+----+----|
-  
     //                            ,----+----,             ,----+----,
                                        ,    ,                  ,    ,
     //                            |----+----+----|   |----+----+----|
@@ -73,123 +117,43 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //                            ,----+----+----,   ,----+----+----,
   ),
 
-  [_LOWER] = LAYOUT_ergodox_pretty_kc(
-    //,-----+----+----+----+----+----+----.                 ,----+----+----+----+----+----+-----.
-            ,    ,    ,    ,    ,    ,    ,                      ,MPRV,MPLY,MNXT,VOLD,VOLU,     ,
-    //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
-            ,    , UP ,    ,    ,    ,    ,                      ,    ,    ,    ,    ,    ,     ,
-    //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
-            ,LEFT,DOWN,RGHT,    ,    ,                            LEFT,DOWN, UP ,RGHT,    ,     ,
-    //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
-            ,    ,    ,    ,    ,    ,    ,                      ,    ,    ,    ,    ,    ,     ,
-    //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
-            ,    ,    ,    ,    ,                                          ,    ,    ,    ,    ,
-    // |----+----+----+----+----+    +----|                 |----+    +----+----+----+----+----|
-  
-    //                            ,----+----,             ,----+----,
-                                       ,    ,                  ,    ,
-    //                            |----+----+----|   |----+----+----|
-                                                 ,        ,
-    //                            |    .    .----|   |----.    .    |
-                                       ,    ,    ,        ,    ,
-    //                            ,----+----+----,   ,----+----+----,
-  ),
 };
 
-/* const uint16_t PROGMEM fn_actions[] = { */
-/*     [1] = ACTION_LAYER_TAP_TOGGLE(SYMB)                // FN1 - Momentary Layer 1 (Symbols) */
-/* }; */
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    switch (keycode) {
-      case EPRM:
-        eeconfig_init();
-        return false;
-      case VRSN:
-        SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-        return false;
-      #ifdef RGBLIGHT_ENABLE
-      case RGB_SLD:
-        rgblight_mode(1);
-        return false;
-      #endif
-    }
-  }
-  return true;
-}
-
-// Runs just one time when the keyboard initializes.
-void matrix_init_user(void) {
-#ifdef RGBLIGHT_COLOR_LAYER_0
-  rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
-#endif
-};
 
 // Runs whenever there is a layer state change.
 uint32_t layer_state_set_user(uint32_t state) {
-  ergodox_board_led_off();
-  ergodox_right_led_1_off();
-  ergodox_right_led_2_off();
-  ergodox_right_led_3_off();
+  ergodox_led_all_off();
 
   uint8_t layer = biton32(state);
   switch (layer) {
       case 0:
-        #ifdef RGBLIGHT_COLOR_LAYER_0
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
-        #else
-        #ifdef RGBLIGHT_ENABLE
-          rgblight_init();
-        #endif
-        #endif
         break;
       case 1:
         ergodox_right_led_1_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_1
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_1);
-        #endif
         break;
       case 2:
         ergodox_right_led_2_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_2
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_2);
-        #endif
         break;
       case 3:
         ergodox_right_led_3_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_3
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_3);
-        #endif
         break;
       case 4:
         ergodox_right_led_1_on();
         ergodox_right_led_2_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_4
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_4);
-        #endif
         break;
       case 5:
         ergodox_right_led_1_on();
         ergodox_right_led_3_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_5
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_5);
-        #endif
         break;
       case 6:
         ergodox_right_led_2_on();
         ergodox_right_led_3_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_6
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_6);
-        #endif
         break;
       case 7:
         ergodox_right_led_1_on();
         ergodox_right_led_2_on();
         ergodox_right_led_3_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_7
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_7);
-        #endif
         break;
       default:
         break;
@@ -197,3 +161,36 @@ uint32_t layer_state_set_user(uint32_t state) {
 
   return state;
 };
+
+void persistent_default_layer_set(uint16_t default_layer) {
+  eeconfig_update_default_layer(default_layer);
+  default_layer_set(default_layer);
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case QWERTY:
+      if (record->event.pressed) {
+        persistent_default_layer_set(1UL<<_QWERTY);
+      }
+      return false;
+      break;
+    case LOWER:
+      if (record->event.pressed) {
+        layer_on(_LOWER);
+      } else {
+        layer_off(_LOWER);
+      }
+      return false;
+      break;
+    case RAISE:
+      if (record->event.pressed) {
+        layer_on(_RAISE);
+      } else {
+        layer_off(_RAISE);
+      }
+      return false;
+      break;
+  }
+  return true;
+}
