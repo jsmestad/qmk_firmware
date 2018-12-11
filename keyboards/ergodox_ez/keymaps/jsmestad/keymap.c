@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //                            |----+----+----|   |----+----+----|
                                                  ,        ,
     //                            |    .    .----|   |----.    .    |
-                                   SPC , SPC,    ,        ,    ,BSPC
+                                   SPC ,BSPC,    ,        ,    ,BSPC
     //                            ,----+----+----,   ,----+----+----,
   ),
 
