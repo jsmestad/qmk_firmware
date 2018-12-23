@@ -13,14 +13,14 @@ extern keymap_config_t keymap_config;
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 #define _QWERTY 0
-#define _RAISE 1
-#define _ADJUST 2
+#define _LOWER 1
+#define _RAISE 2
+#define _ADJUST 16
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   RAISE,
-  /* LOWER, */
-  /* RAISE, */
+  LOWER,
   ADJUST,
   /* GAMING, */
 };
@@ -28,37 +28,58 @@ enum custom_keycodes {
 #define KC_ KC_TRNS
 #define _______ KC_TRNS
 
+
 #define KC_NAV MO(_RAISE)
 #define KC_PC TO(0)
 #define KC_ADJ MO(_ADJUST)
 
+#define KC_LOWR LOWER
+#define KC_RASE RAISE
+
+#define KC_ESCC MT(MOD_LCTL, KC_ESC)    // Control (hold), Escape (tap)
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc(
-    //,----+----+----+----+----+----.           .----+----+----+----+----+----,
-       ESC , 1  , 2  , 3  , 4  , 5  ,             6  , 7  , 8  , 9  , 0  ,MINS,
-    //|----+----+----+----+----+----|           |----+----+----+----+----+----|
-       BSLS, Q  , W  , E  , R  , T  ,             Y  , U  , I  , O  , P  ,RBRC,
-    //|----+----+----+----+----+----|           |----+----+----+----+----+----|
-       TAB , A  , S  , D  , F  , G  ,             H  , J  , K  , L  ,SCLN,QUOT,
-    //|----+----+----+----+----+----|           |----+----+----+----+----+----|
-       LSFT, Z  , X  , C  , V  , B  ,             N  , M  ,COMM,DOT ,SLSH,LBRC,
-    //|----+----+----+----+----+----+----| |----+----+----+----+----+----+----|
-       LCTL,LGUI,LALT,GRV ,NAV ,BSPC,DELT,  ENT ,SPC ,EQL ,MINS,QUOT,ENT ,RGUI
-    //,----+----+----+----+----+----+----. .----+----+----+----+----+----+----,
+  //,----+----+----+----+----+----.           .----+----+----+----+----+----,
+     EQL , 1  , 2  , 3  , 4  , 5  ,             6  , 7  , 8  , 9  , 0  ,MINS,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+     TAB , Q  , W  , E  , R  , T  ,             Y  , U  , I  , O  , P  ,BSLS,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+     ESCC, A  , S  , D  , F  , G  ,             H  , J  , K  , L  ,SCLN,QUOT,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+     LSFT, Z  , X  , C  , V  , B  ,             N  , M  ,COMM,DOT ,SLSH,RSFT,
+  //|----+----+----+----+----+----+----| |----+----+----+----+----+----+----|
+         ,LALT,LGUI,    ,LOWR,BSPC,DEL ,  ENT ,SPC ,RASE,    ,LBRC,RBRC,
+  //,----+----+----+----+----+----+----. .----+----+----+----+----+----+----,
+  ),
+
+  [_LOWER] = LAYOUT_kc(
+  //,----+----+----+----+----+----.           .----+----+----+----+----+----,
+     GRV ,    ,    ,    ,    ,    ,            MPRV,MPLY,MNXT,VOLD,VOLU,    ,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+         ,    , UP ,    ,    ,    ,                ,    ,    ,    ,    ,    ,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+         ,LEFT,DOWN,RGHT,    ,    ,            LEFT,DOWN, UP ,RGHT,    ,    ,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+         ,    ,    ,    ,    ,                ,    ,    ,    ,    ,    ,    ,
+  //|----+----+----+----+----+----+----| |----+----+----+----+----+----+----|
+         ,    ,    ,    ,    ,    ,    ,      ,    ,    ,    ,    ,    ,
+  //,----+----+----+----+----+----+----. .----+----+----+----+----+----+----,
   ),
 
   [_RAISE] = LAYOUT_kc(
-    //,----+----+----+----+----+----.           .----+----+----+----+----+----,
-       PC  , F1 , F2 , F3 , F4 , F5 ,             F6 , F7 , F8 , F9 , F10, F11,
-    //|----+----+----+----+----+----|           |----+----+----+----+----+----|
-           ,    ,    ,    ,    ,    ,                ,    ,    ,    ,    ,    ,
-    //|----+----+----+----+----+----|           |----+----+----+----+----+----|
-           ,    ,    ,    ,    ,    ,                ,    ,    ,    ,    ,    ,
-    //|----+----+----+----+----+----|           |----+----+----+----+----+----|
-       ADJ ,    ,    ,    ,    ,                ,    ,    ,    ,    ,    ,    ,
-    //|----+----+----+----+----+----+----| |----+----+----+----+----+----+----|
-           ,    ,    ,    ,    ,    ,    ,      ,    ,    ,    ,    ,    ,
-    //,----+----+----+----+----+----+----. .----+----+----+----+----+----+----,
+  //,----+----+----+----+----+----.           .----+----+----+----+----+----,
+     F12 , F1 , F2 , F3 , F4 , F5 ,             F6 , F7 , F8 , F9 ,F10 ,F11 ,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+         ,    ,    ,    ,    ,    ,                ,    ,    ,    ,    ,    ,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+         ,    ,    ,    ,    ,    ,                ,    ,    ,    ,    ,    ,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+     ADJ ,    ,    ,    ,    ,                ,    ,    ,    ,    ,    ,    ,
+  //|----+----+----+----+----+----+----| |----+----+----+----+----+----+----|
+         ,    ,    ,    ,    ,    ,    ,      ,    ,    ,    ,    ,    ,
+  //,----+----+----+----+----+----+----. .----+----+----+----+----+----+----,
   ),
 
   [_ADJUST] = LAYOUT(
@@ -103,3 +124,46 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   }
   return MACRO_NONE;
 };
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case QWERTY:
+      if (record->event.pressed) {
+        #ifdef AUDIO_ENABLE
+          PLAY_SONG(tone_qwerty);
+        #endif
+        persistent_default_layer_set(1UL<<_QWERTY);
+      }
+      return false;
+      break;
+    case LOWER:
+      if (record->event.pressed) {
+        layer_on(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+      return false;
+      break;
+    case RAISE:
+      if (record->event.pressed) {
+        layer_on(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+      return false;
+      break;
+    case ADJUST:
+      if (record->event.pressed) {
+        layer_on(_ADJUST);
+      } else {
+        layer_off(_ADJUST);
+      }
+      return false;
+      break;
+  }
+  return true;
+}
