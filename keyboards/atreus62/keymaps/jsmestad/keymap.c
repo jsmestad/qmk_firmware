@@ -4,9 +4,9 @@
 #include QMK_KEYBOARD_H
 #include "atreus62.h"
 #include "action_layer.h"
-#include "eeconfig.h"
+/* #include "eeconfig.h" */
 
-extern keymap_config_t keymap_config;
+/* extern keymap_config_t keymap_config; */
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
@@ -50,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|           |----+----+----+----+----+----|
      LSFT, Z  , X  , C  , V  , B  ,             N  , M  ,COMM,DOT ,SLSH,RSFT,
   //|----+----+----+----+----+----+----| |----+----+----+----+----+----+----|
-         ,LALT,LGUI,    ,LOWR,BSPC,DEL ,  ENT ,SPC ,RASE,    ,LBRC,RBRC,
+         ,LGUI,LALT,    ,LOWR,BSPC,DEL ,  ENT ,SPC ,RASE,    ,LBRC,RBRC,
   //,----+----+----+----+----+----+----. .----+----+----+----+----+----+----,
   ),
 
@@ -100,8 +100,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 
-const uint16_t PROGMEM fn_actions[] = {
-
+void matrix_init_user(void) {
+  rgblight_enable_noeeprom();
+  rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+  rgblight_setrgb_red();
 };
 
 void persistent_default_layer_set(uint16_t default_layer) {
@@ -109,29 +111,31 @@ void persistent_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
-
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
-  // MACRODOWN only works in this function
-  switch (id) {
-  case 0:
-    if (record->event.pressed) {
-      register_code(KC_RSFT);
-    }
-    else {
-      unregister_code(KC_RSFT);
-    }
+uint32_t layer_state_set_user(uint32_t state) {
+  switch (biton32(state)) {
+  case _RAISE:
+    rgblight_sethsv_noeeprom_azure();
+    break;
+  case _LOWER:
+    rgblight_sethsv_noeeprom_springgreen();
+    break;
+  /* case _PLOVER: */
+  /*   rgblight_setrgb (0x00,  0xFF, 0x00); */
+  /*   break; */
+  case _ADJUST:
+    rgblight_sethsv_noeeprom_white();
+    break;
+  default: //  for any other layers, or the default layer
+    rgblight_sethsv_noeeprom_red();
     break;
   }
-  return MACRO_NONE;
-};
+  return state;
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(tone_qwerty);
-        #endif
         persistent_default_layer_set(1UL<<_QWERTY);
       }
       return false;
