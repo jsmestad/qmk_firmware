@@ -30,7 +30,7 @@ enum custom_keycodes {
 // TODO check out these configs for ideas:
 // - qmk_firmware/keyboards/ergodox_infinity/keymaps/dudeofawesome/keymap.c
 // - https://github.com/qmk/qmk_firmware/tree/master/layouts/community/ergodox/replicaJunction
-      
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_ergodox_pretty_kc(
@@ -41,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
        ESCC , A  , S  , D  , F  , G  ,                             H  , J  , K  , L  ,SCLN, QUOT,
     //|-----+----+----+----+----+----+----|                 |----+----+----+----+----+----+-----|
-       LSFT , Z  , X  , C  , V  , B  ,    ,                      , N  , M  ,COMM, DOT,SLSH, RSFT,
+       LSPO , Z  , X  , C  , V  , B  ,    ,                      , N  , M  ,COMM, DOT,SLSH, RSPC,
     //|-----+----+----+----+----+----|    |                 |    |----+----+----+----+----+-----|
             , GRV,    ,    ,LOWR,                                      RASE,    ,LBRC,RBRC,    , // R46 (last field, is not working?)
     // |----+----+----+----+----+    +----|                 |----+    +----+----+----+----+----|
@@ -50,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //                            |----+----+----|   |----+----+----|
                                                  ,    PGUP,
     //                            |    .    .----|   |----.    .    |
-                                   BSPC,DEL ,LGUI,    PGDN, ENT, SPC 
+                                   BSPC,DEL ,LGUI,    PGDN, ENT, SPC
     //                            ,----+----+----,   ,----+----+----,
   ),
 

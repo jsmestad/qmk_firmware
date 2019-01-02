@@ -1,7 +1,8 @@
 #pragma once
 
 /* With Elite C, there are extra unused pins */
-#define UNUSED_PINS { F0, F1, C7, B0, D5 }
+#define UNUSED_PINS                                                            \
+  { F0, F1, C7, B0, D5 }
 
 // #define USB_MAX_POWER_CONSUMPTION 500
 
@@ -14,3 +15,6 @@
 #define RGBLIGHT_SAT_STEP 8
 #define RGBLIGHT_VAL_STEP 8
 #define RGBLIGHT_LIMIT_VAL 150
+
+/* Leader Key support */
+#define LEADER_TIMEOUT 300

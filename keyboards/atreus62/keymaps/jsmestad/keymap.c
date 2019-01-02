@@ -48,9 +48,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|           |----+----+----+----+----+----|
      ESCC, A  , S  , D  , F  , G  ,             H  , J  , K  , L  ,SCLN,QUOT,
   //|----+----+----+----+----+----|           |----+----+----+----+----+----|
-     LSFT, Z  , X  , C  , V  , B  ,             N  , M  ,COMM,DOT ,SLSH,RSFT,
+     LSPO, Z  , X  , C  , V  , B  ,             N  , M  ,COMM,DOT ,SLSH,RSPC,
   //|----+----+----+----+----+----+----| |----+----+----+----+----+----+----|
-         ,LGUI,LALT,    ,LOWR,BSPC,DEL ,  ENT ,SPC ,RASE,    ,LBRC,RBRC,
+         ,LGUI,LALT,    ,LOWR,BSPC,DEL ,  ENT ,SPC ,RASE,LEAD,LBRC,RBRC,
   //,----+----+----+----+----+----+----. .----+----+----+----+----+----+----,
   ),
 
@@ -170,4 +170,68 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
   }
   return true;
+}
+
+LEADER_EXTERNS();
+// Declare a boolean variable to keep track of whether any sequence
+// will have been matched.
+volatile bool did_leader_succeed;
+
+void matrix_scan_user(void) {
+  LEADER_DICTIONARY() {
+    // Initialize did_leader_succeed as well as leading to be false
+    did_leader_succeed = leading = false;
+    /* leading = false; */
+    /* leader_end(); */
+
+    // Replace the sequences below with your own sequences.
+    SEQ_ONE_KEY(KC_C) {
+      // When I press KC_LEAD and then T, this sends CTRL + SHIFT + T
+      SEND_STRING(SS_LCTRL(SS_LSFT("C")));
+      did_leader_succeed = true;
+    }
+    SEQ_ONE_KEY(KC_V) {
+      // When I press KC_LEAD and then T, this sends CTRL + SHIFT + T
+      SEND_STRING(SS_LCTRL(SS_LSFT("V")));
+      did_leader_succeed = true;
+    }
+
+    // Note: This is not an array, you don't need to put any commas
+    // or semicolons between sequences.
+    /* SEQ_TWO_KEYS(KC_N, KC_T) { */
+    /*   // When I press KC_LEAD and then N followed by T, this sends CTRL + T */
+    /*   SEND_STRING(SS_LCTRL("t")); */
+    /* } */
+
+    // Call leader_end at the end of the function, instead of at
+    // the start. This way, we're sure we have set did_leader_succeed.
+    leader_end();
+  }
+}
+void leader_start(void) {
+  // sequence started
+
+  rgblight_sethsv_noeeprom_gold();
+}
+
+void leader_end(void) {
+  if (did_leader_succeed) {
+    rgblight_sethsv_noeeprom_green();
+    wait_ms(300);
+    // If any sequence was matched, did_leader_succeed will have
+    // been set to true up in the matrix_scan_user function.
+    // Put your code for a matched leader key sequence here.
+  } else {
+    rgblight_sethsv_noeeprom_white();
+    for (int i = 0; i < 4; i++) {
+      rgblight_toggle_noeeprom(); // OFF
+      wait_ms(100);
+      rgblight_toggle_noeeprom(); // ON
+      wait_ms(100);
+    }
+    // If no sequence was matched, did_leader_succeed will not
+    // have been set to true anywhere, so we'll end up here.
+    // Put your code for an unmatched leader key sequence here.
+  }
+  rgblight_sethsv_noeeprom_red();
 }
