@@ -29,8 +29,8 @@ enum custom_keycodes {
 #define KC_RASE RAISE
 
 #define KC_ESCC MT(MOD_LCTL, KC_ESC)   // Control (hold), Escape (tap)
-#define KC_BK_A MT(MOD_LALT, KC_BSPC)  // Alt (hold), Backspace (tap)
-#define KC_DL_C MT(MOD_LGUI, KC_DEL)   // Win/Cmd (hold), Delete (tap)
+/* #define KC_BK_C MT(MOD_LGUI, KC_BSPC)  // Win/Cmd (hold), Backspace (tap) */
+#define KC_SPCC MT(MOD_LGUI, KC_SPC)   // Win/Cmd (hold), Space (tap)
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|           |----+----+----+----+----+----|
      LSPO, Z  , X  , C  , V  , B  ,             N  , M  ,COMM,DOT ,SLSH,RSPC,
   //|----+----+----+----+----+----+----| |----+----+----+----+----+----+----|
-         ,LGUI,LALT,    ,LOWR,BK_A,DL_C,  ENT ,SPC ,RASE,LEAD,LBRC,RBRC,
+         ,LGUI,LALT,    ,LOWR,BSPC,DEL ,  ENT ,SPC ,RASE,LEAD,LBRC,RBRC,
   //,----+----+----+----+----+----+----. .----+----+----+----+----+----+----,
   ),
 
