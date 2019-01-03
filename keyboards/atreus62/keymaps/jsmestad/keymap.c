@@ -15,6 +15,7 @@
 #define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
+#define _GAMING 3
 #define _ADJUST 16
 
 enum custom_keycodes {
@@ -22,7 +23,7 @@ enum custom_keycodes {
   RAISE,
   LOWER,
   ADJUST,
-  /* GAMING, */
+  GAMING,
 };
 
 #define KC_ KC_TRNS
@@ -31,6 +32,7 @@ enum custom_keycodes {
 
 #define KC_NAV MO(_RAISE)
 #define KC_PC TO(0)
+#define KC_GM TO(3)
 #define KC_ADJ MO(_ADJUST)
 
 #define KC_LOWR LOWER
@@ -64,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|           |----+----+----+----+----+----|
          ,    ,    ,    ,    ,                ,    ,    ,    ,    ,    ,    ,
   //|----+----+----+----+----+----+----| |----+----+----+----+----+----+----|
-         ,    ,    ,    ,    ,    ,    ,      ,    ,    ,    ,    ,    ,
+         ,    ,    ,    ,    ,    ,    ,      ,    ,    ,    ,    ,    , GM
   //,----+----+----+----+----+----+----. .----+----+----+----+----+----+----,
   ),
 
@@ -82,6 +84,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,----+----+----+----+----+----+----. .----+----+----+----+----+----+----,
   ),
 
+  [_GAMING] = LAYOUT_kc(
+  //,----+----+----+----+----+----.           .----+----+----+----+----+----,
+     GRV , 1  , 2  , 3  , 4  , 5  ,             6  , 7  , 8  , 9  , 0  ,MINS,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+     TAB , Q  , W  , E  , R  , T  ,             Y  , U  , I  , O  , P  ,BSLS,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+     LCTL, A  , S  , D  , F  , G  ,             H  , J  , K  , L  ,SCLN,QUOT,
+  //|----+----+----+----+----+----|           |----+----+----+----+----+----|
+     LSFT, Z  , X  , C  , V  , B  ,             N  , M  ,COMM,DOT ,SLSH,RSPC,
+  //|----+----+----+----+----+----+----| |----+----+----+----+----+----+----|
+     ESC ,LGUI,LALT,    ,LOWR, SPC,BSPC,  ENT ,SPC ,RASE,LEAD,LBRC,RBRC, PC
+  //,----+----+----+----+----+----+----. .----+----+----+----+----+----+----,
+  ),
   [_ADJUST] = LAYOUT(
   //,-------+-------+-------+-------+-------+-------.               .-------+-------+-------+-------+-------+-------,
      _______,_______,_______,_______,_______,_______,                _______,_______,_______,_______,_______,_______,
@@ -123,6 +138,9 @@ uint32_t layer_state_set_user(uint32_t state) {
   /*   break; */
   case _ADJUST:
     rgblight_sethsv_noeeprom_white();
+    break;
+  case _GAMING:
+    rgblight_sethsv_noeeprom_purple();
     break;
   default: //  for any other layers, or the default layer
     rgblight_sethsv_noeeprom_red();
