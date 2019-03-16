@@ -108,6 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 void matrix_init_user(void) {
+  // eeconfig_init();
   rgblight_enable_noeeprom();
   rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
   rgblight_setrgb_red();
