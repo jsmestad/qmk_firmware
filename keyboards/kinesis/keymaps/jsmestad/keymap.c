@@ -1,10 +1,12 @@
 #include QMK_KEYBOARD_H
-#include <action_layer.h>
+
+extern keymap_config_t keymap_config;
 
 #define _QWERTY 0
 #define _LOWER 1
 
 #define KC_ESCC MT(MOD_LCTL, KC_ESC)   // Control (hold), Escape (tap)
+#define KC_LOWR MO(_LOWER)
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -47,19 +49,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               KC_GRV,   KC_INS,   KC_LEFT,  KC_LOWR,                                                                                       KC_UP,    KC_DOWN,  KC_LBRC,  KC_RBRC,
                                                       KC_LCTL,  KC_LALT,                                               KC_RGUI,  KC_RCTL,
                                                                 KC_HOME,                                               KC_PGUP,
-                                            KC_BSPC,  KC_DEL,   KC_END,                                                KC_PGDN, KC_ENTER, KC_SPC
-  )
+                                            KC_BSPC,  KC_DEL,   KC_END,                                                KC_PGDN, KC_ENTER, KC_SPC),
 
   [_LOWER] = LAYOUT_pretty(
-    KC_ESC,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,         KC_F9,    KC_F10,   KC_F11,   KC_F12,   KC_PSCR,  KC_SLCK,  KC_PAUS,  KC_FN0,   KC_1,
-          ,       ,         ,         ,         ,         ,                                                                          ,         ,         ,         ,         ,         ,
-          ,       ,    KC_UP,         ,         ,         ,                                                                          ,         ,         ,         ,         ,         ,
-          ,KC_LEFT,  KC_DOWN,  KC_RGHT,         ,         ,                                                                   KC_LEFT,  KC_DOWN,    KC_UP,  KC_RGHT,         ,         ,
-          ,       ,         ,         ,         ,         ,                                                                          ,         ,         ,         ,         ,         ,
-                  ,         ,         ,         ,                                                                                              ,         ,         ,         ,
-                                                            ,         ,                                                      ,         ,
-                                                                      ,                                                      ,
-                                                   ,        ,         ,                                                      ,         ,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______,                                                                _______, _______, _______, _______, _______, _______,
+  _______, _______,   KC_UP, _______, _______, _______,                                                                _______, _______, _______, _______, _______, _______,
+  _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,                                                                KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______, _______,
+  _______, _______, _______, _______, _______, _______,                                                                _______, _______, _______, _______, _______, _______,
+           _______, _______, _______, _______,                                                                                  _______, _______, _______, _______,
+                                                        _______, _______,                            _______, _______,
+                                                                 _______,                            _______,
+                                               _______, _______, _______,                            _______, _______, _______
   )
 
 
@@ -73,30 +74,8 @@ void matrix_scan_user(void) {
 
 }
 
-void persistent_default_layer_set(uint16_t default_layer) {
-  eeconfig_update_default_layer(default_layer);
-  default_layer_set(default_layer);
-}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case QWERTY:
-      if (record->event.pressed) {
-        persistent_default_layer_set(1UL<<_QWERTY);
-      }
-      return false;
-      break;
-    case LOWER:
-      if (record->event.pressed) {
-        layer_on(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
-  }
   return true;
 }
 
