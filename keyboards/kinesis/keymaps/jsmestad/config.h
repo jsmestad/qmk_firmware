@@ -5,3 +5,22 @@
 
 #undef DEBOUNCE
 #define DEBOUNCE 1
+
+#define RGB_DI_PIN F5
+#define RGBLED_NUM 22
+#define RGBLIGHT_ANIMATIONS
+/* #define RGBLIGHT_EFFECT_ALTERNATING */
+/* #define RGBLIGHT_EFFECT_BREATHING */
+#define RGBLIGHT_EFFECT_CHRISTMAS
+/* #define RGBLIGHT_EFFECT_KNIGHT */
+/* #define RGBLIGHT_EFFECT_RAINBOW_MOOD */
+/* #define RGBLIGHT_EFFECT_RAINBOW_SWIRL */
+/* #define RGBLIGHT_EFFECT_RGB_TEST */
+/* #define RGBLIGHT_EFFECT_SNAKE */
+/* #define RGBLIGHT_EFFECT_STATIC_GRADIENT */
+#define RGBLIGHT_SLEEP true
+
+/* #define DRIVER_LED_TOTAL 22 */
+/* #define RGB_DISABLE_WHEN_USB_SUSPENDED true */
+
+/* And don't forget to add some keyboard shortcuts like `RGB_TOG, RGB_MOD, RGB_SAD, RGB_SAI, RGB_HUD, RGB_HUI, RGB_VAD, RGB_VAI` */

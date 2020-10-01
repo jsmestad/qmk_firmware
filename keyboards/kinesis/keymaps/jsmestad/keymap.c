@@ -64,23 +64,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                  _______,                            _______,
                                                _______, _______, _______,                            _______, _______, _______
   )
-
-
 };
 
-void matrix_init_user(void) {
-
-}
-
-void matrix_scan_user(void) {
-
-}
-
+void keyboard_post_init_user(void) {
+  // Call the post init code.
+  rgblight_enable_noeeprom();                             // enables Rgb, without saving settings
+  rgblight_sethsv_noeeprom(HSV_TEAL);                     // sets the color to teal/cyan without saving
+  rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_GRADIENT);  // sets mode to Fast breathing without saving
+  /* rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING + 3); */
+};
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
-}
-
-void led_set_user(uint8_t usb_led) {
-
 }
