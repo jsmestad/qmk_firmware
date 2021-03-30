@@ -22,12 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* USB Device descriptor parameter */
 
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x6062
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    Profet
-#define PRODUCT         Atreus62
-#define DESCRIPTION     QMK keyboard firmware for Atreus62
+#define VENDOR_ID 0xFEED
+#define PRODUCT_ID 0x6062
+#define DEVICE_VER 0x0001
+#define MANUFACTURER Profet
+#define PRODUCT Atreus62
 
 /* key matrix size */
 // Rows are doubled-up
@@ -35,8 +34,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_COLS 13
 
 // wiring of each half
-#define MATRIX_ROW_PINS { D2, D3, D1, D0, D4 }
-#define MATRIX_COL_PINS { F4, F5, F6, F7, B1, B3, B2, B6, B5, B4, E6, D7, C6 }
+#define MATRIX_ROW_PINS \
+    { D2, D3, D1, D0, D4 }
+#define MATRIX_COL_PINS \
+    { F4, F5, F6, F7, B1, B3, B2, B6, B5, B4, E6, D7, C6 }
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION ROW2COL
